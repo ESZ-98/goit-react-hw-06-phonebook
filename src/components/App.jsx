@@ -5,7 +5,6 @@ import Filter from './Filter/Filter';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from './redux/filterSlice';
-import { deleteContact, replaceContacts } from './redux/contactsSlice';
 import selectors from './redux/selectors';
 
 export const App = () => {

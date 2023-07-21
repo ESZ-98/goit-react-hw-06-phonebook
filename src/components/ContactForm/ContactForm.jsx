@@ -1,24 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'components/redux/contactsSlice';
+import selectors from 'components/redux/selectors';
 
 const ContactForm = () => {
-const initialValues = {
-  name: '',
-  number: '',
-};
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectors.getContacts);
 
-  const handleChange = value => {
-    return { [initialValues.name]: value };
+  const initialValues = {
+    name: '',
+    number: '',
+  };
+
+  const handleChange = event => {
+    return { [event.target.name]: event.target.value };
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    const doesContactExist = contacts =>
-      contacts.name === initialValues.name ||
-      contacts.number === initialValues.number;
-    if (doesContactExist) {
+    if (contacts.filter(contact => contact.name === name).length !== 1) {
+      dispatch(addContact(name, number));
+    } else {
       alert(`Contact already exists!`);
       return;
     }

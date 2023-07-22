@@ -30,7 +30,7 @@ const ContactForm = () => {
     event.preventDefault();
 
     const doesContactExist = contacts.some(
-      contact => contact.name === setName || contact.number === setNumber
+      contact => contact.name === name || contact.number === number
     );
     if (doesContactExist) {
       alert(`Contact already exists!`);

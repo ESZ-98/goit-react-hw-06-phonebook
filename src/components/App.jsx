@@ -4,6 +4,7 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteContacts } from './redux/contactsSlice';
 import { setFilter } from './redux/filterSlice';
 import selectors from './redux/selectors';
 
@@ -24,29 +25,22 @@ export const App = () => {
   };
 
   const changeFilter = event => {
-    setFilter({ filter: event.target.value });
+    dispatch(setFilter(event.target.value));
   };
 
   const deleteContact = id => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContacts(id));
   };
 
   const getFilteredContacts = (contacts, filter) => {
-    contacts.filter(contact =>
+   return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
-  useEffect(() => {
-    const getStorageContacts = localStorage.getItem('contacts');
-    if (getStorageContacts) {
-      return { contacts: JSON.parse(getStorageContacts) };
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  });
+useEffect(() => {
+  localStorage.setItem('contacts', JSON.stringify(contacts));
+}, [contacts]);
 
   return (
     <div

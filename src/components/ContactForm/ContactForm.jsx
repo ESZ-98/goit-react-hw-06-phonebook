@@ -12,21 +12,32 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const handleChange = event => {
-    return { [event.target.name]: event.target.value };
-  };
+ const handleChange = event => {
+   const { name, value } = event.currentTarget;
+   switch (name) {
+     case 'name':
+       setName(value);
+       break;
+     case 'number':
+       setNumber(value);
+       break;
+     default:
+       return;
+   }
+ };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+const handleSubmit = event => {
+  event.preventDefault();
 
-    const doesContactExist = contacts.some(
-      contact => contact.name === setName || contact.number === setNumber
-    );
-    if (doesContactExist) {
-      alert(`Contact already exists!`);
-      dispatch(addContact(name, number));
-    }
-  };
+  const doesContactExist = contacts.some(
+    contact => contact.name === setName || contact.number === setNumber
+  );
+  if (doesContactExist) {
+    alert(`Contact already exists!`);
+  } else {
+    dispatch(addContact(name, number));
+  }
+};
 
   return (
     <form className={css.contact_form} onSubmit={handleSubmit}>

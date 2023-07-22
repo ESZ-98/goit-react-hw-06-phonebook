@@ -9,7 +9,7 @@ const contactsInitialState = [
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: contactsInitialState,
+  initialState: contactsFromStorage || contactsInitialState,
   reducers: {
     addContact: {
       reducer(state, action) {
@@ -25,16 +25,23 @@ const contactsSlice = createSlice({
         };
       },
     },
-    deleteContact(state, action) {
-      const index = state.findIndex(contact => contact.id === action.payload);
-      state.splice(index, 1);
+
+    contactsFromStorage() {
+      const getStorageContacts = localStorage.getItem('contacts');
+      const contactsFromStorage = JSON.parse(getStorageContacts);
+
+      if (getStorageContacts) {
+        return { contacts: JSON.parse(getStorageContacts) };
+      }
     },
-    replaceContacts(state, action) {
-      return action.payload;
+
+    deleteContacts(state, action) {
+      const index = state.findIndex(contact => contact.id === action.payload);
+
+      state.splice(index, 1);
     },
   },
 });
 
-export const { addContact, deleteContact, replaceContacts } =
-  contactsSlice.actions;
+export const { addContact, deleteContacts } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

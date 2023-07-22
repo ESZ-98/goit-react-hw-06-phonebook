@@ -7,6 +7,9 @@ const contactsInitialState = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+const getStorageContacts = localStorage.getItem('contacts');
+const contactsFromStorage = JSON.parse(getStorageContacts);
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsFromStorage || contactsInitialState,
@@ -27,9 +30,6 @@ const contactsSlice = createSlice({
     },
 
     contactsFromStorage() {
-      const getStorageContacts = localStorage.getItem('contacts');
-      const contactsFromStorage = JSON.parse(getStorageContacts);
-
       if (getStorageContacts) {
         return { contacts: JSON.parse(getStorageContacts) };
       }

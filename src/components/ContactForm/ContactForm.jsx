@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'components/redux/contactsSlice';
-import selectors from 'components/redux/selectors';
+import { addContact } from 'redux/contactsSlice';
+import selectors from 'redux/selectors';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -12,32 +12,32 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
- const handleChange = event => {
-   const { name, value } = event.currentTarget;
-   switch (name) {
-     case 'name':
-       setName(value);
-       break;
-     case 'number':
-       setNumber(value);
-       break;
-     default:
-       return;
-   }
- };
+  const handleChange = event => {
+    const { name, value } = event.currentTarget;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
+    }
+  };
 
-const handleSubmit = event => {
-  event.preventDefault();
+  const handleSubmit = event => {
+    event.preventDefault();
 
-  const doesContactExist = contacts.some(
-    contact => contact.name === setName || contact.number === setNumber
-  );
-  if (doesContactExist) {
-    alert(`Contact already exists!`);
-  } else {
-    dispatch(addContact(name, number));
-  }
-};
+    const doesContactExist = contacts.some(
+      contact => contact.name === setName || contact.number === setNumber
+    );
+    if (doesContactExist) {
+      alert(`Contact already exists!`);
+    } else {
+      dispatch(addContact(name, number));
+    }
+  };
 
   return (
     <form className={css.contact_form} onSubmit={handleSubmit}>
